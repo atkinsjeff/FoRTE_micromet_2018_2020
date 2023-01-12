@@ -1,0 +1,138 @@
+# sorting for differences between years
+require(psych)
+    # adding factors
+csc$disturbance_severity <- as.factor(csc$disturbance_severity)
+csc$treatment <- as.factor(csc$treatment)
+
+
+#### effect size calculation
+
+# restrict to only 2020
+
+# csc hetero and arrangement
+csc %>%
+    dplyr::select(disturbance_severity, year, rugosity, top_rugosity, enl, fhd, porosity,
+                  clumping_index) %>%
+    dplyr::filter(year != 2019) %>%
+    dplyr::group_by(disturbance_severity, year) %>%
+    dplyr::summarise_at(vars(rugosity:clumping_index),~round(mean(., na.rm = TRUE), 2)) %>%
+    pivot_wider(names_from = year, values_from = c(rugosity:clumping_index)) %>%
+    data.frame() -> csc.sums                    
+
+csc %>%
+    dplyr::select(disturbance_severity, year, rugosity, top_rugosity, enl, fhd, porosity,
+                  clumping_index) %>%
+    dplyr::filter(year != 2019) %>%
+    dplyr::group_by(disturbance_severity, year) %>%
+    dplyr::summarise_at(vars(rugosity:clumping_index),~round(sd(., na.rm = TRUE), 2)) %>%
+    pivot_wider(names_from = year, values_from = c(rugosity:clumping_index)) %>%
+    data.frame() -> csc.sd         
+
+# csc height and cover
+csc %>%
+    dplyr::select(disturbance_severity, year, mean_height_mean, moch, max_ht, p10, p25, p50, p75, p90, cover_fraction, vai_mean) %>%
+    dplyr::filter(year != 2019) %>%
+    dplyr::group_by(disturbance_severity, year) %>%
+    dplyr::summarise_at(vars(mean_height_mean:vai_mean),~round(mean(., na.rm = TRUE), 2)) %>%
+    pivot_wider(names_from = year, values_from = c(mean_height_mean:vai_mean)) %>%
+    data.frame() -> height.sums    
+
+
+
+##### TOP DOWN
+
+### BY DISTURBANCE and TREATMENT  TOP DOWN
+# csc hetero and arrangement
+csc %>%
+    dplyr::select(disturbance_severity,treatment, year, rugosity, top_rugosity, enl, fhd, porosity,
+                  clumping_index) %>%
+    dplyr::filter(year != 2019 & treatment == "T") %>%
+    dplyr::group_by(disturbance_severity, year) %>%
+    dplyr::summarise_at(vars(rugosity:clumping_index),~round(mean(., na.rm = TRUE), 2)) %>%
+    pivot_wider(names_from = year, values_from = c(rugosity:clumping_index)) %>%
+    data.frame() -> csc.top.sums                    
+
+
+# csc height and cover
+csc %>%
+    dplyr::select(disturbance_severity, treatment, year, mean_height_mean, moch, max_ht, p10, p25, p50, p75, p90, cover_fraction, vai_mean) %>%
+    dplyr::filter(year != 2019 & treatment == "T") %>%
+    dplyr::group_by(disturbance_severity, treatment, year) %>%
+    dplyr::summarise_at(vars(mean_height_mean:vai_mean),~round(mean(., na.rm = TRUE), 2)) %>%
+    pivot_wider(names_from = year, values_from = c(mean_height_mean:vai_mean)) %>%
+    data.frame() -> height.top.sums  
+
+
+
+
+##### Bottom Up
+
+### BY DISTURBANCE and TREATMENT  TOP DOWN
+# csc hetero and arrangement
+csc %>%
+    dplyr::select(disturbance_severity,treatment, year, rugosity, top_rugosity, enl, fhd, porosity,
+                  clumping_index) %>%
+    dplyr::filter(year != 2019 & treatment == "B") %>%
+    dplyr::group_by(disturbance_severity, year) %>%
+    dplyr::summarise_at(vars(rugosity:clumping_index),~round(mean(., na.rm = TRUE), 2)) %>%
+    pivot_wider(names_from = year, values_from = c(rugosity:clumping_index)) %>%
+    data.frame() -> csc.bottom.sums                    
+
+
+# csc height and cover
+csc %>%
+    dplyr::select(disturbance_severity, treatment, year, mean_height_mean, moch, max_ht, p10, p25, p50, p75, p90, cover_fraction, vai_mean) %>%
+    dplyr::filter(year != 2019 & treatment == "B") %>%
+    dplyr::group_by(disturbance_severity, year) %>%
+    dplyr::summarise_at(vars(mean_height_mean:vai_mean),~round(mean(., na.rm = TRUE), 2)) %>%
+    pivot_wider(names_from = year, values_from = c(mean_height_mean:vai_mean)) %>%
+    data.frame() -> height.bottom.sums  
+
+
+
+csc %>%
+    dplyr::select(disturbance_severity, treatment, year, mean_height_mean, moch, max_ht, p10, p25, p50, p75, p90, cover_fraction, vai_mean) %>%
+    dplyr::filter(year != 2019) %>%
+    dplyr::group_by(disturbance_severity, treatment, year) %>%
+    dplyr::summarise_at(vars(mean_height_mean:vai_mean),~round(mean(., na.rm = TRUE), 2)) %>%
+    pivot_longer( cols = mean_height_mean:vai_mean    ) %>%
+    pivot_wider(names_from = year, names_glue = "mean{year}") %>%
+    data.frame() -> big.boi.means
+
+csc %>%
+    dplyr::select(disturbance_severity, treatment, year, mean_height_mean, moch, max_ht, p10, p25, p50, p75, p90, cover_fraction, vai_mean) %>%
+    dplyr::filter(year != 2019) %>%
+    dplyr::group_by(disturbance_severity, treatment, year) %>%
+    dplyr::summarise_at(vars(mean_height_mean:vai_mean),~round(sd(., na.rm = TRUE), 2)) %>%
+    pivot_longer( cols = mean_height_mean:vai_mean    ) %>%
+    pivot_wider(names_from = year, names_glue = "sd{year}") %>%
+    data.frame() -> big.boi.sd
+
+
+write.csv(big.boi.means, "height_means.csv")
+write.csv(big.boi.sd, "height_sd.csv")
+
+
+
+# csc treatments
+
+big.boi.means$diffMean <- (big.boi.means$mean2020 - big.boi.means$mean2018) / big.boi.means$mean2018
+big.boi.sd$diffSD <- (big.boi.sd$sd2020 - big.boi.sd$sd2018) / big.boi.sd$sd2018
+df.csc <- merge(big.boi.means, big.boi.sd)
+
+df.csc$s = sqrt( ((df.csc$sd2018^2) + (df.csc$sd2020^2))/2 )
+df.csc$cohens.d = (df.csc$mean2018 - df.csc$mean2020) / df.csc$s
+
+
+#### code effect size
+df.csc$effect_Size <- if (df.csc$cohens.d < 0.19){
+    effect_Size = "Very Small"
+} else if (df.csc$cohens.d >= 0.2 && df.csc$cohens.d < 0.5){
+    effect_Size = "Small"
+} else if (df.csc$cohens.d >= 0.5 && df.csc$cohens.d < 0.8){
+    effect_Size = "Medium"
+} else {effect_size = "crazy"}
+
+
+write.csv(df.csc, "annual_differences_stats.csv")
+

@@ -1,0 +1,27 @@
+{
+    "id": "DC9641D2",
+    "path": "C:/R/FoRTE_micromet2018_2020/R/01_data_import_and_clenaing_script.R",
+    "project_path": "R/01_data_import_and_clenaing_script.R",
+    "type": "r_source",
+    "hash": "54995435",
+    "contents": "",
+    "dirty": false,
+    "created": 1629036972836.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "tempName": "Untitled1",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "0,0",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1629227466,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1629227466738,
+    "read_only": false,
+    "read_only_alternatives": []
+}
