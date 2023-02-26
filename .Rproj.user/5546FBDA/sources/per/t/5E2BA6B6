@@ -1,6 +1,6 @@
 {
     "id": "5E2BA6B6",
-    "path": "F:/DesktopBackup/R/FoRTE_micromet2018_2020/R/01_data_import_and_clenaing_script.R",
+    "path": "F:/DesktopBackup/R/FoRTE_micromet_2018_2020/R/01_data_import_and_clenaing_script.R",
     "project_path": "R/01_data_import_and_clenaing_script.R",
     "type": "r_source",
     "hash": "2715922059",
@@ -12,8 +12,8 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "483,20",
-        "scrollLine": "344"
+        "cursorPosition": "115,0",
+        "scrollLine": "0"
     },
     "folds": "",
     "lastKnownWriteTime": 1673535807,

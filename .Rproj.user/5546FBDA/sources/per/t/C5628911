@@ -1,9 +1,9 @@
 {
     "id": "C5628911",
-    "path": "F:/DesktopBackup/R/FoRTE_micromet2018_2020/R/06_ranger_approach.R",
+    "path": "F:/DesktopBackup/R/FoRTE_micromet_2018_2020/R/06_ranger_approach.R",
     "project_path": "R/06_ranger_approach.R",
     "type": "r_source",
-    "hash": "3747299377",
+    "hash": "2233037625",
     "contents": "",
     "dirty": false,
     "created": 1673538206923.0,
@@ -13,15 +13,15 @@
         "tempName": "Untitled4",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "68,50",
-        "scrollLine": "36"
+        "cursorPosition": "1109,0",
+        "scrollLine": "1071"
     },
-    "folds": "",
-    "lastKnownWriteTime": 1673538713,
+    "folds": "848|32|856|0|\n",
+    "lastKnownWriteTime": 1677439158,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1673538713370,
+    "last_content_update": 1677439158990,
     "read_only": false,
     "read_only_alternatives": []
 }
